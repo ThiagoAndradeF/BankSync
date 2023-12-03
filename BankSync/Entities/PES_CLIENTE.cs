@@ -1,14 +1,17 @@
 
 namespace BankSynce.Entities
 {
-    public class PES_CLIENTE : PES_PESSOA
+    public class PES_CLIENTE 
     { 
-        List<PES_FORNECEDOR> FORNECEDORES {get;set;} = default!;
-        int PES_PESSOA.CD_PESSOA { get; set;}
-        string PES_PESSOA.NM_PESSOA { get; set ; } = string.Empty;
-        List<OCS_CONTA>? PES_PESSOA.CONTAS { get; set; }
-        public int CD_USUARIO { get;set;}
-        public USER_USUARIO USUARIO {get;set;} = default!;
+        public List<PES_FORNECEDOR> FORNECEDORES {get;set;} = default!;
+        public int CD_CLIENTE { get; set;} 
+        public string NM_CLIENTE { get; set ; } = string.Empty;
+        public List<OCS_CONTA>? CONTAS { get; set; }
         
+        public USER_USUARIO USUARIO {get;set;} = default!;
+
+        public int CD_USUARIO { get;set;}
+        
+        public List<OCS_TRANSACOES> TRANSACOES {get;set;} = default!;
     }
 }

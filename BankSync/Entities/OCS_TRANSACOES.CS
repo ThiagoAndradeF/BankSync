@@ -7,10 +7,10 @@
         public OCS_CONTA  CONTA_ENTRADA {  get; set; } = default!;
         public int CD_CONTA_SAIDA {get;set; }
         public OCS_CONTA CONTA_SAIDA {  get; set; } = default!;
-        public int CD_CREDOR { get; set; }
-        public PES_PESSOA CREDOR { get; set; } = default!;
+        public int CD_CLIENTE { get; set; }
+        public PES_CLIENTE CLIENTE { get; set; } = default!;
         public int CD_FORNECEDOR { get; set; }
-        public PES_PESSOA FORNECEDOR {get;set;} = default!;
+        public PES_FORNECEDOR FORNECEDOR {get;set;} = default!;
         public DateTime DT_TRANSACAO { get; set; }
         public string DS_TRANSACAO { get; set; } = string.Empty;
         public int VL_TRANSACAO { get; set; }

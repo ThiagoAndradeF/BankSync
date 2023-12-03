@@ -9,7 +9,10 @@
         public DateTime DT_CADASTRO { get; set; }
         public int CD_BANCO { get; set; }
         public TAB_BANCO BANCO { get; set; } = default!;
-        public int CD_PESSOA { get; set; }
-        public PES_PESSOA PESSOA { get; set; } = default!;
+        public int? CD_CLIENTE { get; set; }
+        public PES_CLIENTE? CLIENTE { get; set; } = default!;
+        public int? CD_FORNECEDOR {get;set;}
+        public PES_FORNECEDOR? FORNECEDOR {get;set;} = default!;
+        public List<OCS_TRANSACOES> TRANSACOES {get;set;} = default!;
     }
 }

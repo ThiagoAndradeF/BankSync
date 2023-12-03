@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\BankSync"
+    "\\BankSync",
+    "\\BankSync\\Controllers",
+    "\\BankSync\\Models"
   ],
-  "SelectedNode": "\\BankSync.sln",
+  "SelectedNode": "\\BankSync\\Controllers\\HomeController.cs",
   "PreviewInSolutionExplorer": false
 }

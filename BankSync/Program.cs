@@ -1,11 +1,12 @@
+using BankSynce.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<CartsyContext>(options => {
-    options.UseNpgsql("Host=localhost;Port=5432;Database=Cartsy;Username=postgres;Password=3309;Include Error Detail=true");
+builder.Services.AddDbContext<BankSynceContext>(options => {
+    options.UseNpgsql("Host=localhost;Port=5432;Database=BannkSynce;Username=postgres;Password=3309;Include Error Detail=true");
 });
 var app = builder.Build();
 

@@ -8,6 +8,6 @@ namespace BankSynce.Entities
         public PES_CLIENTE CLIENTE {get;set;} = default!;
         public string NM_FORNECEDOR { get; set ; } = string.Empty;
         public List<OCS_CONTA> CONTAS { get; set; } = default!;
-        public List<OCS_TRANSACOES> TRANSACOES {get;set;} = default!;
+        // public List<OCS_TRANSACOES> TRANSACOES {get;set;} = default!;
     }
 }

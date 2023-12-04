@@ -3,8 +3,9 @@
     "",
     "\\BankSync",
     "\\BankSync\\Controllers",
+    "\\BankSync\\Entities",
     "\\BankSync\\Models"
   ],
-  "SelectedNode": "\\BankSync\\Controllers\\HomeController.cs",
+  "SelectedNode": "\\BankSync\\Entities\\TAB_BANCO.cs",
   "PreviewInSolutionExplorer": false
 }

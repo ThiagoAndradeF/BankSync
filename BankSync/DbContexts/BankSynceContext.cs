@@ -103,23 +103,24 @@ namespace BankSynce.DbContexts
                 entity.Property(e => e.ID_TRANSACAO).IsRequired();
 
                 entity.HasOne(d => d.CONTA_ENTRADA)
-                    .WithMany(d => d.TRANSACOES)
+                    .WithMany(d => d.TRANSACOES_ENTRADA)
                     .HasForeignKey(d => d.CD_CONTA_ENTRADA)
                     .OnDelete(DeleteBehavior.Restrict); // Evita a exclusão em cascata
 
                 entity.HasOne(d => d.CONTA_SAIDA)
-                    .WithMany(d => d.TRANSACOES)
+                    .WithMany(d => d.TRANSACOES_SAIDA)
                     .HasForeignKey(d => d.CD_CONTA_SAIDA)
                     .OnDelete(DeleteBehavior.Restrict); // Evita a exclusão em cascata
 
-                entity.HasOne(d => d.CLIENTE)
-                    .WithMany(c =>c.TRANSACOES)
-                    .HasForeignKey(d => d.CD_CLIENTE);
+                // entity.HasOne(d => d.CLIENTE)
+                //     .WithMany(c =>c.TRANSACOES)
+                //     .HasForeignKey(d => d.CD_CLIENTE);
 
-                entity.HasOne(d => d.FORNECEDOR)
-                    .WithMany(d => d.TRANSACOES)
-                    .HasForeignKey(d => d.CD_FORNECEDOR);
+                // entity.HasOne(d => d.FORNECEDOR)
+                //     .WithMany(d => d.TRANSACOES)
+                //     .HasForeignKey(d => d.CD_FORNECEDOR);
             });
+        base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -13,6 +13,7 @@
         public PES_CLIENTE? CLIENTE { get; set; } = default!;
         public int? CD_FORNECEDOR {get;set;}
         public PES_FORNECEDOR? FORNECEDOR {get;set;} = default!;
-        public List<OCS_TRANSACOES> TRANSACOES {get;set;} = default!;
+        public List<OCS_TRANSACOES> TRANSACOES_ENTRADA {get;set;} = default!;
+        public List<OCS_TRANSACOES> TRANSACOES_SAIDA {get;set;} = default!;
     }
 }

@@ -12,6 +12,6 @@ namespace BankSynce.Entities
 
         public int CD_USUARIO { get;set;}
         
-        public List<OCS_TRANSACOES> TRANSACOES {get;set;} = default!;
+        // public List<OCS_TRANSACOES> TRANSACOES {get;set;} = default!;
     }
 }

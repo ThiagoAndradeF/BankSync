@@ -1,5 +1,4 @@
 # BankSync
-Um projeto básico de conciliações bancárias.
-Feito em C# e angular.
+Um projeto básico de conciliações bancárias, feito em C# e angular.
 
 Ainda em implementação.

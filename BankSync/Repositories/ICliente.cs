@@ -3,10 +3,8 @@ using BankSynce.Entities;
 
 namespace BankSynce.Repositories
 {
-    public interface IUsuario{
-
-        Task<bool> CriarUsuarioCompleto(UsuarioFull usuario);
+    public interface ICliente{
         Task<IEnumerable<Fornecedor>> ListarFornecedoresComContasPorIdCliente( int idCliente);
-
+        Task<IEnumerable<TransacaoFull>> ListarTodasTransacoesIdCliente(int idCliente);
     }
 }

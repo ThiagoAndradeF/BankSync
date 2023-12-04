@@ -7,8 +7,8 @@
         public string NumeroConta { get; set; } = string.Empty;
         public string NumeroAgencia { get; set; } = string.Empty;
         public DateTime DataCadastro { get; set; }
-        public int IdBanco { get; set; }
-        public Banco Banco { get; set; } = default!;
+        public string NomeBanco {get;set;} = string.Empty;
+
         public int? IdCliente { get; set; }
         public Cliente? Cliente { get; set; } = default!;
         public int? IdFornecedor {get;set;}

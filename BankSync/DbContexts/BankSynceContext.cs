@@ -11,7 +11,6 @@ namespace BankSynce.DbContexts
         public DbSet<Transacao> Transacao { get; set; } 
         public DbSet<Cliente> Cliente {get;set;} 
         public DbSet<Fornecedor> Fornecedor {get;set;}
-        public DbSet<Banco> Banco { get; set; } 
         public DbSet<Usuario> Usuario { get; set; } 
 
         public BankSynceContext(DbContextOptions<BankSynceContext> options)
@@ -28,10 +27,7 @@ namespace BankSynce.DbContexts
                 entity.Property(e => e.NumeroConta).IsRequired().HasMaxLength(20);
                 entity.Property(e => e.NumeroAgencia).IsRequired().HasMaxLength(20);
                 entity.Property(e => e.DataCadastro);
-                entity.Property(e => e.IdBanco).IsRequired();
-                entity.HasOne(d => d.Banco)
-                    .WithMany(p => p.Contas)
-                    .HasForeignKey(d => d.IdBanco);
+                entity.Property(e => e.NomeBanco).IsRequired().HasMaxLength(50);
                 entity.HasOne(d => d.Cliente)
                     .WithMany(p => p.Contas)
                     .HasForeignKey(d => d.IdCliente);
@@ -74,10 +70,6 @@ namespace BankSynce.DbContexts
 
                 entity.Property(e => e.Nome).IsRequired().HasMaxLength(100);
 
-                entity.HasOne(d => d.Usuario)
-                    .WithOne(e => e.Cliente)
-                    .HasForeignKey<Usuario>(d => d.IdUsuario);
-
                 entity.HasMany(d => d.Fornecedores)
                     .WithOne(e => e.Cliente)
                     .HasForeignKey(d => d.IdFornecedor); 
@@ -85,16 +77,6 @@ namespace BankSynce.DbContexts
                 entity.HasMany(e => e.Contas)
                     .WithOne(e => e.Cliente)
                     .HasForeignKey(c => c.IdConta);
-            });
-            modelBuilder.Entity<Banco>(entity =>
-            {
-                entity.HasKey(e => e.IdBanco); 
-                entity.Property(e => e.Nome)
-                    .IsRequired()
-                    .HasMaxLength(100);
-                entity.HasMany(b => b.Contas)
-                    .WithOne(d => d.Banco)
-                    .HasForeignKey(c => c.IdConta); // Chave estrangeira em Conta
             });
             modelBuilder.Entity<Transacao>(entity =>
             {

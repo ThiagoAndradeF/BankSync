@@ -7,109 +7,110 @@ namespace BankSynce.DbContexts
 {
     public class BankSynceContext : DbContext
     {
-        public DbSet<OCS_CONTA> OCS_CONTA { get; set; }
-        public DbSet<OCS_TRANSACOES> OCS_TRANSACOES { get; set; } 
-        public DbSet<PES_CLIENTE> PES_CLIENTE {get;set;} 
-        public DbSet<PES_FORNECEDOR> PES_FORNECEDOR{get;set;}
-        public DbSet<TAB_BANCO> TAB_BANCO { get; set; } 
-        public DbSet<USER_USUARIO> USER_USUARIO { get; set; } 
+        public DbSet<Conta> Conta { get; set; }
+        public DbSet<Transacao> Transacao { get; set; } 
+        public DbSet<Cliente> Cliente {get;set;} 
+        public DbSet<Fornecedor> Fornecedor {get;set;}
+        public DbSet<Banco> Banco { get; set; } 
+        public DbSet<Usuario> Usuario { get; set; } 
 
         public BankSynceContext(DbContextOptions<BankSynceContext> options)
         : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<OCS_CONTA>(entity =>
+            modelBuilder.Entity<Conta>(entity =>
             {
                 // Definindo a chave primária
-                entity.HasKey(e => e.CD_CONTA);
+                entity.HasKey(e => e.IdConta);
                 // Configurações das propriedades
-                entity.Property(e => e.VL_SALDO).IsRequired();
-                entity.Property(e => e.NR_CONTA).IsRequired().HasMaxLength(20);
-                entity.Property(e => e.NR_AGENCIA).IsRequired().HasMaxLength(20);
-                entity.Property(e => e.DT_CADASTRO).IsRequired();
-                entity.Property(e => e.CD_BANCO).IsRequired();
-                entity.HasOne(d => d.BANCO)
-                    .WithMany(p => p.CONTAS)
-                    .HasForeignKey(d => d.CD_BANCO);
-                entity.HasOne(d => d.CLIENTE)
-                    .WithMany(p => p.CONTAS)
-                    .HasForeignKey(d => d.CD_CLIENTE);
-                entity.HasOne(d => d.FORNECEDOR)
-                    .WithMany(p => p.CONTAS)
-                    .HasForeignKey(d => d.CD_FORNECEDOR);
+                entity.Property(e => e.Saldo).IsRequired();
+                entity.Property(e => e.NumeroConta).IsRequired().HasMaxLength(20);
+                entity.Property(e => e.NumeroAgencia).IsRequired().HasMaxLength(20);
+                entity.Property(e => e.DataCadastro);
+                entity.Property(e => e.IdBanco).IsRequired();
+                entity.HasOne(d => d.Banco)
+                    .WithMany(p => p.Contas)
+                    .HasForeignKey(d => d.IdBanco);
+                entity.HasOne(d => d.Cliente)
+                    .WithMany(p => p.Contas)
+                    .HasForeignKey(d => d.IdCliente);
+                entity.HasOne(d => d.Fornecedor)
+                    .WithMany(p => p.Contas)
+                    .HasForeignKey(d => d.IdFornecedor);
                 
             });
 
-            modelBuilder.Entity<USER_USUARIO>(entity =>
+            modelBuilder.Entity<Usuario>(entity =>
             {
-                entity.HasKey(e => e.CD_USUARIO);
-                entity.Property(e => e.DS_EMAIL).IsRequired().HasMaxLength(100);
-                entity.Property(e => e.DS_SENHA).IsRequired().HasMaxLength(100);
-                entity.Property(e => e.DT_CADASTRO).IsRequired();
-                entity.HasOne(d => d.CLIENTE)
-                    .WithOne(p => p.USUARIO)
-                    .HasForeignKey<PES_CLIENTE>(d => d.CD_USUARIO);
+                entity.HasKey(e => e.IdUsuario);
+                entity.Property(e => e.Email).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Senha).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.DataCadastro).IsRequired();
+                entity.HasOne(d => d.Cliente)
+                    .WithOne(p => p.Usuario)
+                    .HasForeignKey<Cliente>(d => d.IdCliente);
             });
-            modelBuilder.Entity<PES_FORNECEDOR>(entity =>
+            modelBuilder.Entity<Fornecedor>(entity =>
             {
-                entity.HasKey(e => e.CD_FORNECEDOR);
-                entity.Property(e => e.NM_FORNECEDOR).IsRequired().HasMaxLength(100);
+                entity.HasKey(e => e.IdFornecedor);
+                entity.Property(e => e.Nome).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Email).HasMaxLength(100);
+                entity.Property(e => e.Telefone).HasMaxLength(100);
 
-                entity.HasMany(e => e.CONTAS)
-                    .WithOne(e => e.FORNECEDOR)
-                    .HasForeignKey(c => c.CD_CONTA);
+                entity.HasMany(e => e.Contas)
+                    .WithOne(e => e.Fornecedor)
+                    .HasForeignKey(c => c.IdConta);
 
-                entity.HasOne(d => d.CLIENTE)
-                    .WithMany(p => p.FORNECEDORES)
-                    .HasForeignKey(c => c.CD_CLIENTE);
+                entity.HasOne(d => d.Cliente)
+                    .WithMany(p => p.Fornecedores)
+                    .HasForeignKey(c => c.IdCliente);
             });
 
             // Mapeamento para PES_CLIENTE
-            modelBuilder.Entity<PES_CLIENTE>(entity =>
+            modelBuilder.Entity<Cliente>(entity =>
             {
-                entity.HasKey(e => e.CD_CLIENTE);
+                entity.HasKey(e => e.IdCliente);
 
-                entity.Property(e => e.NM_CLIENTE).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Nome).IsRequired().HasMaxLength(100);
 
-                entity.HasOne(d => d.USUARIO)
-                    .WithOne(e => e.CLIENTE)
-                    .HasForeignKey<USER_USUARIO>(d => d.CD_USUARIO);
+                entity.HasOne(d => d.Usuario)
+                    .WithOne(e => e.Cliente)
+                    .HasForeignKey<Usuario>(d => d.IdUsuario);
 
-                entity.HasMany(d => d.FORNECEDORES)
-                    .WithOne(e => e.CLIENTE)
-                    .HasForeignKey(d => d.CD_FORNECEDOR); 
+                entity.HasMany(d => d.Fornecedores)
+                    .WithOne(e => e.Cliente)
+                    .HasForeignKey(d => d.IdFornecedor); 
 
-                entity.HasMany(e => e.CONTAS)
-                    .WithOne(e => e.CLIENTE)
-                    .HasForeignKey(c => c.CD_CONTA);
+                entity.HasMany(e => e.Contas)
+                    .WithOne(e => e.Cliente)
+                    .HasForeignKey(c => c.IdConta);
             });
-            modelBuilder.Entity<TAB_BANCO>(entity =>
+            modelBuilder.Entity<Banco>(entity =>
             {
-                entity.HasKey(e => e.CD_BANCO); 
-                entity.Property(e => e.NM_BANCO)
+                entity.HasKey(e => e.IdBanco); 
+                entity.Property(e => e.Nome)
                     .IsRequired()
                     .HasMaxLength(100);
-                entity.HasMany(b => b.CONTAS)
-                    .WithOne(d => d.BANCO)
-                    .HasForeignKey(c => c.CD_CONTA); // Chave estrangeira em OCS_CONTA
+                entity.HasMany(b => b.Contas)
+                    .WithOne(d => d.Banco)
+                    .HasForeignKey(c => c.IdConta); // Chave estrangeira em Conta
             });
-            modelBuilder.Entity<OCS_TRANSACOES>(entity =>
+            modelBuilder.Entity<Transacao>(entity =>
             {
-                entity.HasKey(e => e.CD_TRANSACAO); // Chave primária
-                entity.Property(e => e.DS_TRANSACAO).IsRequired().HasMaxLength(200);
-                entity.Property(e => e.DT_TRANSACAO).IsRequired();
-                entity.Property(e => e.VL_TRANSACAO).IsRequired();
-                entity.Property(e => e.ID_TRANSACAO).IsRequired();
+                entity.HasKey(e => e.IdTransacao); // Chave primária
+                entity.Property(e => e.Descricao).IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Data);
+                entity.Property(e => e.Valor).IsRequired();
 
-                entity.HasOne(d => d.CONTA_ENTRADA)
-                    .WithMany(d => d.TRANSACOES_ENTRADA)
-                    .HasForeignKey(d => d.CD_CONTA_ENTRADA)
+                entity.HasOne(d => d.ContaEntrada)
+                    .WithMany(d => d.TransacaoEntrada)
+                    .HasForeignKey(d => d.IdContaEntrada)
                     .OnDelete(DeleteBehavior.Restrict); // Evita a exclusão em cascata
 
-                entity.HasOne(d => d.CONTA_SAIDA)
-                    .WithMany(d => d.TRANSACOES_SAIDA)
-                    .HasForeignKey(d => d.CD_CONTA_SAIDA)
+                entity.HasOne(d => d.ContaSaida)
+                    .WithMany(d => d.TransacaoSaida)
+                    .HasForeignKey(d => d.IdContaSaida)
                     .OnDelete(DeleteBehavior.Restrict); // Evita a exclusão em cascata
 
                 // entity.HasOne(d => d.CLIENTE)

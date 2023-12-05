@@ -11,6 +11,5 @@ public class ClienteController : ControllerBase
     public ClienteController(ICliente cliente){
         _cliente = cliente;
     }
-    
 
 }
